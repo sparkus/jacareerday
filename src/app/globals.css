@@ -1,0 +1,416 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: 94, 234, 212;
+  --secondary: 162, 28, 175;
+  --background: 17, 24, 39;
+  --accent: 249, 168, 212;
+}
+
+body {
+  @apply bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen;
+}
+
+/* Modern card styling */
+.glass-card {
+  @apply relative bg-black/90 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl;
+}
+
+/* Animation classes */
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+}
+
+/* Presentation styles */
+.slide-content {
+  @apply relative w-full;
+  z-index: 12;
+}
+
+.slide-title {
+  @apply text-4xl sm:text-5xl font-bold mb-8 bg-gradient-to-r from-teal-400 to-pink-500 bg-clip-text text-transparent;
+}
+
+.slide-text {
+  @apply text-lg sm:text-xl leading-relaxed text-gray-200;
+}
+
+/* Decorative elements */
+.gradient-blob {
+  @apply absolute rounded-full opacity-30 blur-3xl;
+  background: radial-gradient(circle, rgba(var(--primary), 0.4) 0%, rgba(var(--secondary), 0.2) 100%);
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-6 py-3 bg-gradient-to-r from-teal-400 to-pink-500 rounded-lg 
+         font-semibold text-white shadow-lg transition-all duration-300
+         hover:shadow-pink-500/25 hover:scale-105;
+}
+
+.btn-secondary {
+  @apply p-3 bg-black/80 backdrop-blur-lg rounded-lg
+         text-white shadow-lg transition-all duration-300
+         hover:bg-white/20 hover:shadow-white/20;
+}
+
+/* Navigation dots */
+.nav-dot {
+  @apply w-3 h-3 rounded-full bg-white/20 transition-all duration-300;
+}
+
+.nav-dot.active {
+  @apply bg-gradient-to-r from-teal-400 to-pink-500 scale-125;
+}
+
+/* Code block styling */
+.code-block {
+  @apply font-mono bg-black/30 p-4 rounded-lg text-sm leading-relaxed
+         border border-white/10 overflow-x-auto;
+}
+
+/* List styling */
+.feature-list {
+  @apply space-y-4;
+}
+
+.feature-list-item {
+  @apply flex items-start space-x-3 text-lg;
+}
+
+/* QR Code styling */
+.qr-container {
+  @apply fixed bottom-24 right-8 bg-white rounded-xl shadow-2xl;
+  z-index: 20;
+}
+
+/* Video background */
+.video-background {
+  @apply fixed inset-0 w-full h-full object-cover opacity-30;
+  z-index: 1;
+}
+
+.background-overlay {
+  @apply fixed inset-0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.85));
+  z-index: 3;
+}
+
+.content-wrapper {
+  @apply fixed inset-0 flex items-center justify-center p-8;
+  z-index: 10;
+}
+
+.slide-container {
+  @apply relative w-full max-w-4xl mx-auto;
+  z-index: 11;
+}
+
+/* Slide transitions */
+.slide-enter {
+  @apply transform translate-x-full opacity-0;
+}
+
+.slide-enter-active {
+  @apply transform translate-x-0 opacity-100 transition-all duration-500;
+}
+
+.slide-exit {
+  @apply transform translate-x-0 opacity-100;
+}
+
+.slide-exit-active {
+  @apply transform -translate-x-full opacity-0 transition-all duration-500;
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { filter: brightness(100%) blur(0px); }
+  50% { filter: brightness(150%) blur(4px); }
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Matrix rain effect */
+.matrix-background {
+  @apply fixed inset-0;
+  z-index: 2;
+}
+
+.matrix-column {
+  @apply absolute top-0 text-green-500 text-opacity-50 whitespace-nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  line-height: 1;
+  animation: matrix-rain 20s linear infinite;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+/* Automation demo effects */
+.automation-demo {
+  @apply relative mt-8 w-full overflow-hidden rounded-xl;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.typing-effect {
+  @apply font-mono text-green-400;
+  overflow: hidden;
+  border-right: 2px solid;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: currentColor }
+}
+
+/* Code generation effect */
+.code-generation {
+  @apply font-mono text-sm leading-relaxed p-4 rounded-lg;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-line {
+  @apply opacity-0;
+  animation: fade-in 0.5s forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* AI visualization effects */
+.neural-network {
+  @apply absolute inset-0 pointer-events-none;
+}
+
+.neuron {
+  @apply absolute w-2 h-2 rounded-full bg-blue-400;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.synapse {
+  @apply absolute bg-blue-400 opacity-20;
+  height: 1px;
+  transform-origin: 0 0;
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Controls and navigation */
+.controls-container {
+  @apply fixed top-8 right-8 flex gap-4;
+  z-index: 20;
+}
+
+.navigation-dots {
+  @apply fixed bottom-8 left-1/2 transform -translate-x-1/2;
+  z-index: 20;
+}
+
+/* Base container */
+.presentation-container {
+  @apply relative min-h-screen overflow-hidden;
+  isolation: isolate;
+}
+
+/* Background layers */
+.video-background {
+  @apply fixed inset-0 w-full h-full object-cover opacity-30;
+  z-index: -3;
+}
+
+.matrix-background {
+  @apply fixed inset-0;
+  z-index: -2;
+}
+
+.background-overlay {
+  @apply fixed inset-0;
+  background: linear-gradient(180deg, 
+    rgba(0, 0, 0, 0.98) 0%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  z-index: -1;
+}
+
+/* Content layers */
+.content-wrapper {
+  @apply relative min-h-screen flex items-center justify-center p-8;
+  z-index: 1;
+}
+
+.slide-container {
+  @apply w-full max-w-4xl mx-auto;
+}
+
+.slide-content {
+  @apply w-full;
+}
+
+/* Glass card styling */
+.glass-card {
+  @apply bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Controls and overlays */
+.controls-container {
+  @apply fixed top-8 right-8 flex gap-4;
+  z-index: 100;
+}
+
+.navigation-dots {
+  @apply fixed bottom-8 left-1/2 transform -translate-x-1/2;
+  z-index: 100;
+}
+
+.qr-container {
+  @apply fixed bottom-24 right-8 bg-white p-4 rounded-xl;
+  z-index: 100;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Button styles */
+.btn-secondary {
+  @apply p-3 bg-black/90 backdrop-blur-xl rounded-lg
+         text-white shadow-xl transition-all duration-300
+         hover:bg-white/20 hover:shadow-white/20;
+}
+
+/* Navigation dots */
+.nav-dot {
+  @apply w-3 h-3 rounded-full bg-white/20 transition-all duration-300;
+}
+
+.nav-dot.active {
+  @apply bg-gradient-to-r from-teal-400 to-pink-500 scale-125;
+}
+
+/* Slide content styles */
+.slide-title {
+  @apply text-4xl sm:text-5xl font-bold mb-8 bg-gradient-to-r from-teal-400 to-pink-500 bg-clip-text text-transparent;
+}
+
+.slide-text {
+  @apply text-lg sm:text-xl leading-relaxed text-gray-100;
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { filter: brightness(100%) blur(0px); }
+  50% { filter: brightness(150%) blur(4px); }
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Matrix rain effect */
+.matrix-background {
+  @apply fixed inset-0;
+  z-index: 2;
+}
+
+.matrix-column {
+  @apply absolute top-0 text-green-500 text-opacity-50 whitespace-nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  line-height: 1;
+  animation: matrix-rain 20s linear infinite;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+/* Automation demo effects */
+.automation-demo {
+  @apply relative mt-8 w-full overflow-hidden rounded-xl;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.typing-effect {
+  @apply font-mono text-green-400;
+  overflow: hidden;
+  border-right: 2px solid;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: currentColor }
+}
+
+/* Code generation effect */
+.code-generation {
+  @apply font-mono text-sm leading-relaxed p-4 rounded-lg;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-line {
+  @apply opacity-0;
+  animation: fade-in 0.5s forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* AI visualization effects */
+.neural-network {
+  @apply absolute inset-0 pointer-events-none;
+}
+
+.neuron {
+  @apply absolute w-2 h-2 rounded-full bg-blue-400;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.synapse {
+  @apply absolute bg-blue-400 opacity-20;
+  height: 1px;
+  transform-origin: 0 0;
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Controls and navigation */
+.controls-container {
+  @apply fixed top-8 right-8 flex gap-4;
+  z-index: 20;
+}
+
+.navigation-dots {
+  @apply fixed bottom-8 left-1/2 transform -translate-x-1/2;
+  z-index: 20;
+} 
