@@ -2,14 +2,16 @@
 
 import DynamicBackground from '@/components/DynamicBackground'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiZap, FiTrendingUp, FiBriefcase, FiChevronLeft, FiChevronRight, FiMaximize, FiMinimize, FiShare2, FiCpu, FiUsers } from 'react-icons/fi'
+import { FiZap, FiTrendingUp, FiBriefcase, FiChevronLeft, FiChevronRight, FiMaximize, FiMinimize, FiShare2, FiCpu, FiUsers, FiBookOpen } from 'react-icons/fi'
 import { useState, useEffect } from 'react'
 import QRCode from '@/components/QRCode'
+import Link from 'next/link'
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showQR, setShowQR] = useState(false)
+  const [expandedSlide, setExpandedSlide] = useState<number | null>(null)
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -101,7 +103,12 @@ export default function Presentation() {
             </div>
           </motion.div>
         </motion.div>
-      )
+      ),
+      details: {
+        stats: "By 2030, 14% of global workforce may need career changes due to AI (WEF)",
+        sectors: "High-risk sectors: Finance, IT, Legal (67% exposure)",
+        link: "/asi-impact-society"
+      }
     },
     {
       id: 2,
@@ -131,6 +138,35 @@ export default function Presentation() {
               <span className="text-blue-400 font-semibold">What skills will matter?</span>
             </div>
           </div>
+          {/* Add Learn More Section */}
+          {expandedSlide === 2 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-12 glass-card p-8 rounded-2xl"
+            >
+              <h3 className="text-3xl font-bold text-white mb-4">Deep Dive: AI's Progress</h3>
+              <div className="grid grid-cols-2 gap-8 text-left">
+                <div>
+                  <h4 className="text-xl text-blue-400 mb-2">Healthcare Impact</h4>
+                  <p className="text-gray-300">AI diagnostics achieving 95% accuracy in cancer detection</p>
+                </div>
+                <div>
+                  <h4 className="text-xl text-purple-400 mb-2">Financial Impact</h4>
+                  <p className="text-gray-300">60-73% of US equity trading now AI-driven</p>
+                </div>
+              </div>
+              <Link href="/future-of-work" className="mt-6 inline-block text-blue-400 hover:text-blue-300 text-xl">
+                Explore Full Report →
+              </Link>
+            </motion.div>
+          )}
+          <button 
+            onClick={() => setExpandedSlide(prev => prev === 2 ? null : 2)}
+            className="mt-8 bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
+          >
+            {expandedSlide === 2 ? 'Collapse' : 'Learn More'}
+          </button>
         </motion.div>
       )
     },
@@ -177,6 +213,43 @@ export default function Presentation() {
               The people who succeed will know how to work <span className="text-blue-400 font-semibold">with AI</span>, not just rely on it.
             </div>
           </div>
+          {/* Add Career Advice */}
+          {expandedSlide === 3 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-8 glass-card p-8 rounded-2xl"
+            >
+              <h3 className="text-3xl font-bold text-white mb-4">Future-Proof Your Career</h3>
+              <div className="grid grid-cols-2 gap-8 text-left">
+                <div>
+                  <h4 className="text-xl text-pink-400 mb-2">Essential Skills</h4>
+                  <ul className="text-gray-300 space-y-2">
+                    <li>• Critical thinking</li>
+                    <li>• Emotional intelligence</li>
+                    <li>• AI collaboration</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-xl text-blue-400 mb-2">Emerging Roles</h4>
+                  <ul className="text-gray-300 space-y-2">
+                    <li>• AI Ethics Specialist</li>
+                    <li>• Human-Machine Team Manager</li>
+                    <li>• AI Trainer</li>
+                  </ul>
+                </div>
+              </div>
+              <Link href="/high-schooler-advice" className="mt-6 inline-block text-pink-400 hover:text-pink-300 text-xl">
+                Full Career Guide →
+              </Link>
+            </motion.div>
+          )}
+          <button 
+            onClick={() => setExpandedSlide(prev => prev === 3 ? null : 3)}
+            className="mt-6 bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
+          >
+            {expandedSlide === 3 ? 'Collapse' : 'Get Career Advice'}
+          </button>
         </motion.div>
       )
     },
@@ -323,6 +396,17 @@ export default function Presentation() {
             />
           ))}
         </div>
+      </div>
+
+      {/* Document Button */}
+      <div className="fixed bottom-8 left-8 z-50">
+        <Link 
+          href="/asi-impact-society"
+          className="glass-card p-4 rounded-xl hover:bg-white/20 transition-colors flex items-center gap-2"
+        >
+          <FiBookOpen className="w-6 h-6 text-white" />
+          <span className="text-white">Full Research</span>
+        </Link>
       </div>
     </div>
   )
