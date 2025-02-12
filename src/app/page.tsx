@@ -6,19 +6,29 @@ import { FiZap, FiTrendingUp, FiBriefcase, FiChevronLeft, FiChevronRight, FiMaxi
 import { useState, useEffect } from 'react'
 import QRCode from '@/components/QRCode'
 import Link from 'next/link'
+import PresentationImage from '@/components/PresentationImage'
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [expandedSlide, setExpandedSlide] = useState<number | null>(null)
+  const [showRealityImage, setShowRealityImage] = useState(false)
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
-        setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1))
+        if (currentSlide === 1 && !showRealityImage) {
+          setShowRealityImage(true)
+        } else {
+          setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1))
+        }
       } else if (e.key === 'ArrowLeft') {
-        setCurrentSlide(prev => Math.max(prev - 1, 0))
+        if (currentSlide === 1 && showRealityImage) {
+          setShowRealityImage(false)
+        } else {
+          setCurrentSlide(prev => Math.max(prev - 1, 0))
+        }
       } else if (e.key === 'f') {
         toggleFullscreen()
       } else if (e.key === 'q') {
@@ -28,7 +38,7 @@ export default function Presentation() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [])
+  }, [currentSlide, showRealityImage])
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -121,57 +131,256 @@ export default function Presentation() {
         >
           <div className="text-center mb-16 pt-16">
             <h2 className="text-6xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-              AI's Rapid Progress
+              {showRealityImage ? "The Reality" : "Our View"}
             </h2>
-            <div className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-8">
+            <div className="grid grid-cols-2 gap-8">
+              {/* Left Column - Intelligence Graph */}
+              <div className="text-left">
+                <AnimatePresence mode="wait" initial={false}>
+                  {!showRealityImage && (
+                    <motion.div
+                      key="distorted"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="relative"
+                    >
+                      <PresentationImage
+                        src="https://images-jacareerday.agw3.org/distorted_Intelligence.jpg"
+                        alt="Graph showing our distorted view of AI intelligence over time"
+                        width={600}
+                        height={450}
+                        priority
+                        caption="How we see AI: 'Haha that's adorable, the funny robot can do monkey tricks!'"
+                      />
+                    </motion.div>
+                  )}
+                  {showRealityImage && (
+                    <motion.div
+                      key="reality"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="relative"
+                    >
+                      <PresentationImage
+                        src="https://images-jacareerday.agw3.org/Intelligence2.png"
+                        alt="Graph showing the actual exponential growth of AI intelligence"
+                        width={600}
+                        height={450}
+                        caption="The Reality: AI's capabilities are growing exponentially"
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Right Column - Examples */}
+              <div className="text-left">
+                <AnimatePresence mode="wait" initial={false}>
+                  {!showRealityImage && (
+                    <motion.div
+                      key="simple-examples"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-4 relative"
+                    >
+                      <div className="glass-card p-4 rounded-xl">
+                        <img 
+                          src="https://images-jacareerday.agw3.org/shrek_simple.gif"
+                          alt="Simple AI-generated Shrek"
+                          className="w-full rounded-lg mb-2 max-h-[340px] object-contain"
+                        />
+                        <p className="text-gray-300 text-center">Early AI art: Basic style transfer</p>
+                      </div>
+                      <div className="glass-card p-4 rounded-xl">
+                        <video 
+                          autoPlay 
+                          loop 
+                          muted 
+                          playsInline
+                          className="w-full rounded-lg mb-2 max-h-[340px] object-contain"
+                        >
+                          <source src="https://images-jacareerday.agw3.org/will_smith_bad_spaghetti.mp4" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                        <p className="text-gray-300 text-center">Early AI video: Simple face swaps</p>
+                      </div>
+                    </motion.div>
+                  )}
+                  {showRealityImage && (
+                    <motion.div
+                      key="advanced-examples"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-4 relative"
+                    >
+                      <div className="glass-card p-4 rounded-xl">
+                        <img 
+                          src="https://images-jacareerday.agw3.org/shrek_knitted.gif"
+                          alt="Advanced AI-generated Shrek"
+                          className="w-full rounded-lg mb-2 max-h-[340px] object-contain"
+                        />
+                        <p className="text-gray-300 text-center">Modern AI art: Complex style synthesis</p>
+                      </div>
+                      <div className="glass-card p-4 rounded-xl">
+                        <img 
+                          src="https://images-jacareerday.agw3.org/shrek_fashion.gif"
+                          alt="Advanced AI-generated fashion Shrek"
+                          className="w-full rounded-lg mb-2 max-h-[340px] object-contain"
+                        />
+                        <p className="text-gray-300 text-center">Modern AI video: Seamless style adaptation</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+
+            <motion.div 
+              className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-8 mt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <div className="text-3xl text-gray-300 mb-8">
-                In 2019, AI couldn't write essays or create art.<br/>
-                By 2023, tools like ChatGPT and DALL·E were mainstream.
+                {showRealityImage ? (
+                  <>
+                    We consistently underestimate AI's progress.<br/>
+                    What seemed impossible in 2019 is now everyday reality.
+                  </>
+                ) : (
+                  <>
+                    We tend to dismiss AI advances as trivial.<br/>
+                    "It's just pattern matching" or "It's not real intelligence"
+                  </>
+                )}
               </div>
               <div className="text-2xl text-gray-300">
-                Now, AI can build websites, diagnose diseases, and compose music.<br/>
-                <span className="text-pink-500 font-semibold">This isn't decades — it's happening in just a few years.</span>
+                {showRealityImage ? (
+                  <>
+                    ChatGPT, DALL·E, Copilot, Gemini...<br/>
+                    <span className="text-pink-500 font-semibold">Each breakthrough is bigger than the last.</span>
+                  </>
+                ) : (
+                  <>
+                    But this complacent view...<br/>
+                    <span className="text-pink-500 font-semibold">is about to be shattered.</span>
+                  </>
+                )}
               </div>
-            </div>
-            <div className="text-4xl text-gray-300 font-light mt-12">
-              If AI is growing this fast, how will the world of work look when you graduate?<br/>
-              <span className="text-blue-400 font-semibold">What skills will matter?</span>
-            </div>
-          </div>
-          {/* Add Learn More Section */}
-          {expandedSlide === 2 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-12 glass-card p-8 rounded-2xl"
-            >
-              <h3 className="text-3xl font-bold text-white mb-4">Deep Dive: AI's Progress</h3>
-              <div className="grid grid-cols-2 gap-8 text-left">
-                <div>
-                  <h4 className="text-xl text-blue-400 mb-2">Healthcare Impact</h4>
-                  <p className="text-gray-300">AI diagnostics achieving 95% accuracy in cancer detection</p>
-                </div>
-                <div>
-                  <h4 className="text-xl text-purple-400 mb-2">Financial Impact</h4>
-                  <p className="text-gray-300">60-73% of US equity trading now AI-driven</p>
-                </div>
-              </div>
-              <Link href="/future-of-work" className="mt-6 inline-block text-blue-400 hover:text-blue-300 text-xl">
-                Explore Full Report →
-              </Link>
             </motion.div>
-          )}
-          <button 
-            onClick={() => setExpandedSlide(prev => prev === 2 ? null : 2)}
-            className="mt-8 bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
-          >
-            {expandedSlide === 2 ? 'Collapse' : 'Learn More'}
-          </button>
+            {showRealityImage && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-4xl text-gray-300 font-light mt-12"
+              >
+                If we're this wrong about AI's progress today,<br/>
+                <span className="text-blue-400 font-semibold">what are we missing about tomorrow?</span>
+              </motion.div>
+            )}
+          </div>
         </motion.div>
       )
     },
     {
       id: 3,
+      content: (
+        <motion.div 
+          className="max-w-7xl mx-auto p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <div className="text-center mb-16 pt-16">
+            <h2 className="text-6xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              The Speed of Progress
+            </h2>
+            <div className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-12">
+              <div className="grid grid-cols-2 gap-8">
+                <div className="text-left">
+                  <h4 className="text-2xl font-bold text-pink-500 mb-4">2019</h4>
+                  <ul className="text-xl text-gray-300 space-y-4">
+                    <li>• Basic chatbots</li>
+                    <li>• Simple image recognition</li>
+                    <li>• Rule-based automation</li>
+                    <li>• Limited language processing</li>
+                  </ul>
+                </div>
+                <div className="text-left">
+                  <h4 className="text-2xl font-bold text-blue-400 mb-4">2024</h4>
+                  <ul className="text-xl text-gray-300 space-y-4">
+                    <li>• Human-level conversations</li>
+                    <li>• Creating art and music</li>
+                    <li>• Writing code and essays</li>
+                    <li>• Understanding context</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="text-3xl text-gray-300 mt-8">
+                This isn't decades of progress.<br/>
+                <span className="text-pink-500 font-semibold">This is just 5 years.</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )
+    },
+    {
+      id: 4,
+      content: (
+        <motion.div 
+          className="max-w-7xl mx-auto p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <div className="text-center mb-16 pt-16">
+            <h2 className="text-6xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              See It In Action
+            </h2>
+            <div className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-12">
+              <h3 className="text-4xl font-bold text-white mb-6">
+                "What used to take days now takes seconds"
+              </h3>
+              <div className="grid grid-cols-1 gap-6 text-left">
+                <div className="flex items-center gap-4">
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <FiCpu className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <span className="text-2xl text-gray-300">AI can build entire websites from a description</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="p-2 bg-purple-500/20 rounded-lg">
+                    <FiUsers className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <span className="text-2xl text-gray-300">Generate and edit images with natural language</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="p-2 bg-pink-500/20 rounded-lg">
+                    <FiZap className="w-6 h-6 text-pink-400" />
+                  </div>
+                  <span className="text-2xl text-gray-300">Write and debug code automatically</span>
+                </div>
+              </div>
+              <div className="text-3xl text-gray-300 mt-8">
+                But here's the key question:<br/>
+                <span className="text-pink-500 font-semibold">If AI can do all this, what role will humans play?</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )
+    },
+    {
+      id: 5,
       content: (
         <motion.div 
           className="max-w-7xl mx-auto p-8"
@@ -207,54 +416,23 @@ export default function Presentation() {
                   </ul>
                 </div>
               </div>
+              <Link 
+                href="/high-schooler-advice" 
+                className="mt-8 inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
+              >
+                Learn More →
+              </Link>
             </div>
             <div className="text-3xl text-gray-300">
               Use AI to learn faster, but <span className="text-pink-500 font-semibold">don't skip the hard work</span>.<br/>
               The people who succeed will know how to work <span className="text-blue-400 font-semibold">with AI</span>, not just rely on it.
             </div>
           </div>
-          {/* Add Career Advice */}
-          {expandedSlide === 3 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-8 glass-card p-8 rounded-2xl"
-            >
-              <h3 className="text-3xl font-bold text-white mb-4">Future-Proof Your Career</h3>
-              <div className="grid grid-cols-2 gap-8 text-left">
-                <div>
-                  <h4 className="text-xl text-pink-400 mb-2">Essential Skills</h4>
-                  <ul className="text-gray-300 space-y-2">
-                    <li>• Critical thinking</li>
-                    <li>• Emotional intelligence</li>
-                    <li>• AI collaboration</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-xl text-blue-400 mb-2">Emerging Roles</h4>
-                  <ul className="text-gray-300 space-y-2">
-                    <li>• AI Ethics Specialist</li>
-                    <li>• Human-Machine Team Manager</li>
-                    <li>• AI Trainer</li>
-                  </ul>
-                </div>
-              </div>
-              <Link href="/high-schooler-advice" className="mt-6 inline-block text-pink-400 hover:text-pink-300 text-xl">
-                Full Career Guide →
-              </Link>
-            </motion.div>
-          )}
-          <button 
-            onClick={() => setExpandedSlide(prev => prev === 3 ? null : 3)}
-            className="mt-6 bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
-          >
-            {expandedSlide === 3 ? 'Collapse' : 'Get Career Advice'}
-          </button>
         </motion.div>
       )
     },
     {
-      id: 4,
+      id: 6,
       content: (
         <motion.div 
           className="max-w-7xl mx-auto p-8"
@@ -331,7 +509,13 @@ export default function Presentation() {
       {/* Controls Layer */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-50">
         <button 
-          onClick={() => currentSlide > 0 && setCurrentSlide(prev => prev - 1)}
+          onClick={() => {
+            if (currentSlide === 1 && showRealityImage) {
+              setShowRealityImage(false)
+            } else {
+              currentSlide > 0 && setCurrentSlide(prev => prev - 1)
+            }
+          }}
           className={`p-3 rounded-full transition-all duration-200 ${
             currentSlide === 0 
               ? 'bg-white/5 cursor-not-allowed' 
@@ -343,7 +527,13 @@ export default function Presentation() {
           <FiChevronLeft className={`w-6 h-6 ${currentSlide === 0 ? 'text-white/50' : 'text-white'}`} />
         </button>
         <button 
-          onClick={() => currentSlide < slides.length - 1 && setCurrentSlide(prev => prev + 1)}
+          onClick={() => {
+            if (currentSlide === 1 && !showRealityImage) {
+              setShowRealityImage(true)
+            } else {
+              currentSlide < slides.length - 1 && setCurrentSlide(prev => prev + 1)
+            }
+          }}
           className={`p-3 rounded-full transition-all duration-200 ${
             currentSlide === slides.length - 1 
               ? 'bg-white/5 cursor-not-allowed' 
@@ -396,17 +586,6 @@ export default function Presentation() {
             />
           ))}
         </div>
-      </div>
-
-      {/* Document Button */}
-      <div className="fixed bottom-8 left-8 z-50">
-        <Link 
-          href="/asi-impact-society"
-          className="glass-card p-4 rounded-xl hover:bg-white/20 transition-colors flex items-center gap-2"
-        >
-          <FiBookOpen className="w-6 h-6 text-white" />
-          <span className="text-white">Full Research</span>
-        </Link>
       </div>
     </div>
   )
