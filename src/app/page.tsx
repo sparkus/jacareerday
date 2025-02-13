@@ -16,6 +16,18 @@ export default function Presentation() {
   const [showRealityImage, setShowRealityImage] = useState(false)
 
   useEffect(() => {
+    // Handle URL parameters for slide navigation
+    const params = new URLSearchParams(window.location.search)
+    const slideParam = params.get('slide')
+    if (slideParam) {
+      const slideIndex = parseInt(slideParam)
+      if (!isNaN(slideIndex) && slideIndex >= 0 && slideIndex < slides.length) {
+        setCurrentSlide(slideIndex)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
         if (currentSlide === 1 && !showRealityImage) {
@@ -81,7 +93,10 @@ export default function Presentation() {
               Living Through a Revolution
             </h1>
             <p className="text-4xl text-gray-300 font-light max-w-4xl mx-auto">
-              We're experiencing a revolution like the Industrial Revolution and Computer Revolution before it. <span className="text-pink-500 font-semibold">But this one is happening much faster.</span>
+              We're experiencing a revolution like the Industrial Revolution and Computer Revolution before it.
+            </p>
+            <p className="text-4xl text-pink-500 font-semibold mt-4 max-w-4xl mx-auto">
+              And it's transforming our world in months, not decades.
             </p>
           </motion.div>
 
@@ -97,9 +112,14 @@ export default function Presentation() {
                 <div className="p-3 bg-blue-500/20 rounded-xl">
                   <FiTrendingUp className="w-8 h-8 text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white ml-4">Industrial Revolution</h3>
+                <h3 className="text-2xl font-bold text-white ml-4">Your Parents' World</h3>
               </div>
-              <p className="text-xl text-gray-300">Master weavers and blacksmiths lost their jobs to machines. Those who adapted thrived, those who didn't were left behind.</p>
+              <p className="text-xl text-gray-300">
+                When your parents were your age, the internet was just starting. Social media didn't exist. AI was science fiction. The most advanced tech in school was a calculator.
+              </p>
+              <div className="mt-4 text-lg text-gray-400">
+                The world changed completely in just 20 years.
+              </div>
             </div>
             
             <div className="glass-card p-8 rounded-2xl backdrop-blur-lg bg-white/5 border border-white/10">
@@ -107,10 +127,31 @@ export default function Presentation() {
                 <div className="p-3 bg-purple-500/20 rounded-xl">
                   <FiCpu className="w-8 h-8 text-purple-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white ml-4">Computer Revolution</h3>
+                <h3 className="text-2xl font-bold text-white ml-4">Your Future World</h3>
               </div>
-              <p className="text-xl text-gray-300">Typists and switchboard operators disappeared. Again, adaptation was key to success.</p>
+              <p className="text-xl text-gray-300">
+                By the time you graduate, AI will be as common as smartphones are today. The jobs you'll do might not even exist yet. The skills that matter will be completely different.
+              </p>
+              <div className="mt-4 text-lg text-gray-400">
+                What took your parents 20 years, you'll see happen in 2.
+              </div>
             </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 2 }}
+            className="text-center text-2xl text-gray-300"
+          >
+            <p className="mb-4">
+              Your generation will be the first to grow up alongside AI.<br/>
+              <span className="text-pink-500 font-semibold">You'll shape how it changes the world.</span>
+            </p>
+            <p className="text-xl text-gray-400">
+              The question isn't whether AI will transform everything.<br/>
+              It's whether you'll be ready to lead that transformation.
+            </p>
           </motion.div>
         </motion.div>
       ),
@@ -129,10 +170,26 @@ export default function Presentation() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <div className="text-center mb-16 pt-16">
-            <h2 className="text-6xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+          <div className="text-center mb-8 pt-16">
+            <h2 className="text-6xl font-bold mb-4 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               {showRealityImage ? "The Reality" : "Our View"}
             </h2>
+            <div className="glass-card p-6 rounded-xl mb-8">
+              <div className="text-2xl text-gray-300">
+                {showRealityImage ? (
+                  <>
+                    What seemed impossible in 2019 is now everyday reality.<br/>
+                    <span className="text-pink-500 font-semibold">And each breakthrough is bigger than the last.</span>
+                  </>
+                ) : (
+                  <>
+                    "Look at its mistakes"<br/>
+                    "A human would never make those errors"<br/>
+                    <span className="text-pink-500 font-semibold">We focus on what makes us feel superior.</span>
+                  </>
+                )}
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-8">
               {/* Left Column - Intelligence Graph */}
               <div className="text-left">
@@ -242,45 +299,11 @@ export default function Presentation() {
                 </AnimatePresence>
               </div>
             </div>
-
-            <motion.div 
-              className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-8 mt-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="text-3xl text-gray-300 mb-8">
-                {showRealityImage ? (
-                  <>
-                    We consistently underestimate AI's progress.<br/>
-                    What seemed impossible in 2019 is now everyday reality.
-                  </>
-                ) : (
-                  <>
-                    We tend to dismiss AI advances as trivial.<br/>
-                    "It's just pattern matching" or "It's not real intelligence"
-                  </>
-                )}
-              </div>
-              <div className="text-2xl text-gray-300">
-                {showRealityImage ? (
-                  <>
-                    ChatGPT, DALL·E, Copilot, Gemini...<br/>
-                    <span className="text-pink-500 font-semibold">Each breakthrough is bigger than the last.</span>
-                  </>
-                ) : (
-                  <>
-                    But this complacent view...<br/>
-                    <span className="text-pink-500 font-semibold">is about to be shattered.</span>
-                  </>
-                )}
-              </div>
-            </motion.div>
             {showRealityImage && (
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-4xl text-gray-300 font-light mt-12"
+                className="text-4xl text-gray-300 font-light mt-8"
               >
                 If we're this wrong about AI's progress today,<br/>
                 <span className="text-blue-400 font-semibold">what are we missing about tomorrow?</span>
@@ -304,7 +327,7 @@ export default function Presentation() {
               The Speed of Progress
             </h2>
             <div className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-12">
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 gap-8 mb-8">
                 <div className="text-left">
                   <h4 className="text-2xl font-bold text-pink-500 mb-4">2019</h4>
                   <ul className="text-xl text-gray-300 space-y-4">
@@ -315,7 +338,7 @@ export default function Presentation() {
                   </ul>
                 </div>
                 <div className="text-left">
-                  <h4 className="text-2xl font-bold text-blue-400 mb-4">2024</h4>
+                  <h4 className="text-2xl font-bold text-blue-400 mb-4">2025</h4>
                   <ul className="text-xl text-gray-300 space-y-4">
                     <li>• Human-level conversations</li>
                     <li>• Creating art and music</li>
@@ -324,9 +347,48 @@ export default function Presentation() {
                   </ul>
                 </div>
               </div>
+              <div className="text-3xl text-gray-300 mt-8 mb-8 py-4 border-y border-white/20 bg-gradient-to-r from-transparent via-white/5 to-transparent">
+                <span className="font-semibold text-blue-400">The impact</span> is already here:
+              </div>
+              <div className="grid grid-cols-2 gap-8">
+                <div className="text-left">
+                  <h4 className="text-xl font-bold text-blue-400 mb-4">Healthcare & Finance</h4>
+                  <ul className="text-xl text-gray-300 space-y-4">
+                    <li>• AI matches expert diagnosis accuracy</li>
+                    <li>• 60-73% of US trading is AI-driven</li>
+                    <li>• $150B healthcare savings by 2025</li>
+                  </ul>
+                </div>
+                <div className="text-left">
+                  <h4 className="text-xl font-bold text-pink-400 mb-4">Legal & Education</h4>
+                  <ul className="text-xl text-gray-300 space-y-4">
+                    <li>• Contract review 60x faster</li>
+                    <li>• 30% better student outcomes</li>
+                    <li>• 85% faster research analysis</li>
+                  </ul>
+                </div>
+              </div>
               <div className="text-3xl text-gray-300 mt-8">
                 This isn't decades of progress.<br/>
                 <span className="text-pink-500 font-semibold">This is just 5 years.</span>
+              </div>
+            </div>
+            <div className="max-w-4xl mx-auto grid grid-cols-2 gap-8">
+              <div className="glass-card p-6 rounded-xl hover:bg-white/5 transition-colors">
+                <Link href="/asi-impact-society#impact" className="block">
+                  <h3 className="text-2xl font-bold text-white mb-2">Impact on Society →</h3>
+                  <p className="text-gray-300">
+                    Explore how AI is fundamentally reshaping industries, jobs, and daily life. From healthcare to finance, see the full scope of the transformation.
+                  </p>
+                </Link>
+              </div>
+              <div className="glass-card p-6 rounded-xl hover:bg-white/5 transition-colors">
+                <Link href="/future-of-work#opportunities" className="block">
+                  <h3 className="text-2xl font-bold text-white mb-2">Future of Work →</h3>
+                  <p className="text-gray-300">
+                    Discover what jobs will look like in an AI-powered world, which skills will matter most, and how to prepare for the changes ahead.
+                  </p>
+                </Link>
               </div>
             </div>
           </div>
@@ -400,25 +462,32 @@ export default function Presentation() {
                 <div className="text-left">
                   <h4 className="text-2xl font-bold text-pink-500 mb-4">What AI Can Do</h4>
                   <ul className="text-xl text-gray-300 space-y-4">
-                    <li>• Write essays</li>
-                    <li>• Solve routine problems</li>
-                    <li>• Generate code</li>
-                    <li>• Create content</li>
+                    <li>• Write essays & code</li>
+                    <li>• Analyze data & patterns</li>
+                    <li>• Generate content</li>
+                    <li>• Basic reasoning tasks</li>
                   </ul>
                 </div>
                 <div className="text-left">
-                  <h4 className="text-2xl font-bold text-blue-400 mb-4">What AI Can't Do</h4>
+                  <h4 className="text-2xl font-bold text-blue-400 mb-4">What Humans Do Better</h4>
                   <ul className="text-xl text-gray-300 space-y-4">
-                    <li>• Think critically</li>
-                    <li>• Solve big problems</li>
-                    <li>• Make ethical decisions</li>
-                    <li>• Show true creativity</li>
+                    <li>• Physical world interaction</li>
+                    <li>• Novel problem solving</li>
+                    <li>• Emotional intelligence</li>
+                    <li>• Common sense reasoning</li>
                   </ul>
                 </div>
               </div>
+              <div className="mt-6 text-xl text-gray-300">
+                <span className="text-pink-500 font-semibold">Key Point:</span> AI excels at processing information, but struggles with the physical world, emotional understanding, and truly novel situations that require common sense or real-world context.
+              </div>
+              <div className="mt-8 text-xl text-gray-300">
+                Want to learn how to leverage AI while developing crucial human skills?<br/>
+                <span className="text-blue-400">Get practical advice and strategies for high school students →</span>
+              </div>
               <Link 
                 href="/high-schooler-advice" 
-                className="mt-8 inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
+                className="mt-4 inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl text-xl text-white transition-colors"
               >
                 Learn More →
               </Link>

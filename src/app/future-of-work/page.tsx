@@ -23,7 +23,7 @@ export default function FutureOfWork() {
         <div className="max-w-4xl mx-auto p-8">
           {/* Back Button */}
           <Link 
-            href="/" 
+            href="/?slide=2" 
             className="inline-flex items-center text-white mb-8 hover:text-blue-400 transition-colors"
           >
             <FiArrowLeft className="mr-2" />
