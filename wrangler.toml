@@ -1,10 +1,20 @@
 [build]
 command = "npm run build"
-publish = ".next"
+pages_build_output_dir = ".next"
 
 [build.environment]
 NODE_VERSION = "18"
 
 [site]
 bucket = ".next"
-entry-point = "." 
+entry-point = "."
+
+[[build.upload]]
+type = "Pages"
+dir = ".next"
+main = ".next/server/app/page.js"
+include = [
+  ".next/server/**/*",
+  ".next/static/**/*",
+  "public/**/*"
+] 
