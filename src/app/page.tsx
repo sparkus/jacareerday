@@ -514,14 +514,14 @@ export default function Presentation() {
               Your Role in the Revolution
             </h2>
             <div className="max-w-4xl mx-auto glass-card p-8 rounded-2xl mb-12">
-              <div className="text-3xl text-gray-300 mb-8">
+              <div className="text-3xl text-gray-300 mb-12">
                 Think about how fast AI has grown.<br/>
                 What will it look like when you graduate?
               </div>
-              <div className="text-4xl font-bold text-white mb-8">
+              <div className="text-4xl font-bold text-white mb-12 py-4 border-y border-white/20 bg-gradient-to-r from-transparent via-white/5 to-transparent">
                 What role will you play in shaping it?
               </div>
-              <div className="grid grid-cols-1 gap-6 text-left">
+              <div className="grid grid-cols-1 gap-6 text-left mt-8">
                 <div className="flex items-center gap-4">
                   <div className="p-2 bg-blue-500/20 rounded-lg">
                     <FiCpu className="w-6 h-6 text-blue-400" />
