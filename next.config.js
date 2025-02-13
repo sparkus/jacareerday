@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -9,16 +8,6 @@ const nextConfig = {
       },
     ],
     unoptimized: true,
-  },
-  // Ensure compatibility with Cloudflare Pages
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
-    return config;
   },
 }
 
