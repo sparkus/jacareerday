@@ -68,7 +68,7 @@ export default function Presentation() {
       id: 1,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -93,10 +93,10 @@ export default function Presentation() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               Living Through a Revolution
             </h1>
-            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-300 font-light max-w-4xl mx-auto px-4">
+            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-300 font-light max-w-4xl mx-auto px-2 sm:px-4">
               We're experiencing a revolution like the Industrial Revolution and Computer Revolution.
             </p>
-            <p className="text-2xl sm:text-3xl md:text-4xl text-pink-500 font-semibold mt-4 max-w-4xl mx-auto px-4">
+            <p className="text-2xl sm:text-3xl md:text-4xl text-pink-500 font-semibold mt-4 max-w-4xl mx-auto px-2 sm:px-4">
               And it's transforming our world in months, not decades.
             </p>
           </motion.div>
@@ -106,7 +106,7 @@ export default function Presentation() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16 px-4"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 xl:gap-12 mb-8 sm:mb-12 md:mb-16 px-2 sm:px-4"
           >
             <div className="glass-card p-4 sm:p-6 md:p-8 rounded-2xl backdrop-blur-lg bg-white/5 border border-white/10">
               <div className="flex items-center mb-4">
@@ -143,7 +143,7 @@ export default function Presentation() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 2 }}
-            className="text-center text-lg sm:text-xl md:text-2xl text-gray-300 px-4"
+            className="text-center text-lg sm:text-xl md:text-2xl text-gray-300 px-2 sm:px-4"
           >
             <p className="mb-4">
               Your generation will be the first to grow up alongside AI.<br/>
@@ -166,7 +166,7 @@ export default function Presentation() {
       id: 2,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -320,7 +320,7 @@ export default function Presentation() {
       id: 3,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -329,7 +329,7 @@ export default function Presentation() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 md:mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               The Speed of Progress
             </h2>
-            <div className="max-w-4xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
+            <div className="max-w-6xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
               {/* AI Types Section */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
                 <div className="text-left glass-card p-4 rounded-xl bg-blue-500/5">
@@ -358,7 +358,7 @@ export default function Presentation() {
               {/* Progress Timeline */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
                 <div className="text-left">
-                  <h4 className="text-xl sm:text-2xl font-bold text-pink-500 mb-2 sm:mb-4">2019</h4>
+                  <h4 className="text-xl sm:text-2xl font-bold text-pink-500 mb-2 sm:mb-4">2022</h4>
                   <ul className="text-base sm:text-lg md:text-xl text-gray-300 space-y-2 sm:space-y-4">
                     <li>• Basic chatbots</li>
                     <li>• Simple image recognition</li>
@@ -406,7 +406,7 @@ export default function Presentation() {
               </div>
             </div>
 
-            <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               <div className="glass-card p-4 sm:p-6 rounded-xl hover:bg-white/5 transition-colors">
                 <Link href="/asi-impact-society#impact" className="block">
                   <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Impact on Society →</h3>
@@ -432,7 +432,7 @@ export default function Presentation() {
       id: 4,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -441,7 +441,7 @@ export default function Presentation() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 md:mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               See It In Action
             </h2>
-            <div className="max-w-4xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
+            <div className="max-w-6xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
                 "What used to take days now takes seconds"
               </h3>
@@ -478,7 +478,7 @@ export default function Presentation() {
       id: 5,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -537,7 +537,7 @@ export default function Presentation() {
       id: 6,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -548,7 +548,7 @@ export default function Presentation() {
             </h2>
             
             {/* Impact Overview */}
-            <div className="max-w-4xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
+            <div className="max-w-6xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
               <div className="text-xl sm:text-2xl md:text-3xl text-gray-300 mb-8 sm:mb-12">
                 By 2030, work tasks will be nearly evenly divided between<br/>
                 <span className="text-blue-400 font-semibold">humans, machines, and hybrid approaches</span>
@@ -647,7 +647,7 @@ export default function Presentation() {
       id: 7,
       content: (
         <motion.div 
-          className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8"
+          className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -658,7 +658,7 @@ export default function Presentation() {
             </h2>
             
             {/* Featured Resources */}
-            <div className="max-w-4xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
+            <div className="max-w-6xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6">Featured Resources</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <a 
@@ -697,7 +697,7 @@ export default function Presentation() {
             </div>
 
             {/* Main Topics */}
-            <div className="max-w-4xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
+            <div className="max-w-6xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl mb-8 sm:mb-12">
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6">Deep Dive Guides</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                 <Link href="/asi-impact-society" className="block">
@@ -737,7 +737,7 @@ export default function Presentation() {
             </div>
 
             {/* Resource Hub Link */}
-            <div className="max-w-4xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl">
+            <div className="max-w-6xl mx-auto glass-card p-4 sm:p-6 md:p-8 rounded-2xl">
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                 Want to Learn More?
               </h3>
