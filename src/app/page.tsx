@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react'
 import QRCode from '@/components/QRCode'
 import Link from 'next/link'
 import PresentationImage from '@/components/PresentationImage'
+import VideoOverlay from '@/components/VideoOverlay'
+import React from 'react'
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -15,6 +17,8 @@ export default function Presentation() {
   const [expandedSlide, setExpandedSlide] = useState<number | null>(null)
   const [showRealityImage, setShowRealityImage] = useState(false)
   const [isVerticalMode, setIsVerticalMode] = useState(false)
+  const [showIntroVideo, setShowIntroVideo] = useState(true)
+  const [presentationStarted, setPresentationStarted] = useState(false)
 
   useEffect(() => {
     // Handle URL parameters for slide navigation
@@ -24,12 +28,16 @@ export default function Presentation() {
       const slideIndex = parseInt(slideParam)
       if (!isNaN(slideIndex) && slideIndex >= 0 && slideIndex < slides.length) {
         setCurrentSlide(slideIndex)
+        setShowIntroVideo(false)
+        setPresentationStarted(true)
       }
     }
   }, [])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      if (!presentationStarted) return // Disable keyboard navigation before presentation starts
+
       if (e.key === 'ArrowRight') {
         if (currentSlide === 1 && !showRealityImage) {
           setShowRealityImage(true)
@@ -51,7 +59,7 @@ export default function Presentation() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [currentSlide, showRealityImage])
+  }, [currentSlide, showRealityImage, presentationStarted])
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -61,6 +69,11 @@ export default function Presentation() {
       document.exitFullscreen()
       setIsFullscreen(false)
     }
+  }
+
+  const startPresentation = () => {
+    setShowIntroVideo(false)
+    setPresentationStarted(true)
   }
 
   const slides = [
@@ -170,6 +183,7 @@ export default function Presentation() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
+          key={showRealityImage ? 'reality' : 'view'}
         >
           <div className="text-center mb-4 sm:mb-6 md:mb-8 pt-8 sm:pt-12 md:pt-16">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
@@ -314,7 +328,162 @@ export default function Presentation() {
             )}
           </div>
         </motion.div>
-      )
+      ),
+      render: (props: { forceShowReality?: boolean }) => {
+        const shouldShowReality = props.forceShowReality ?? showRealityImage;
+        return (
+          <motion.div 
+            className="max-w-[90rem] mx-auto p-4 sm:p-6 md:p-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            key={shouldShowReality ? 'reality' : 'view'}
+          >
+            <div className="text-center mb-4 sm:mb-6 md:mb-8 pt-8 sm:pt-12 md:pt-16">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+                {shouldShowReality ? "The Reality" : "Our View"}
+              </h2>
+              <div className="glass-card p-4 sm:p-6 rounded-xl mb-4 sm:mb-6 md:mb-8">
+                <div className="text-lg sm:text-xl md:text-2xl text-gray-300">
+                  {shouldShowReality ? (
+                    <>
+                      What seemed impossible in 2019 is now everyday reality.<br/>
+                      <span className="text-pink-500 font-semibold">And each breakthrough is bigger than the last.</span>
+                    </>
+                  ) : (
+                    <>
+                      "Look at its mistakes"<br/>
+                      "A human would never make those errors"<br/>
+                      <span className="text-pink-500 font-semibold">We focus on what makes us feel superior.</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+                {/* Left Column - Intelligence Graph */}
+                <div className="text-left">
+                  <AnimatePresence mode="wait" initial={false}>
+                    {!shouldShowReality && (
+                      <motion.div
+                        key="distorted"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="relative"
+                      >
+                        <PresentationImage
+                          src="https://images-jacareerday.agw3.org/distorted_Intelligence.jpg"
+                          alt="Graph showing our distorted view of AI intelligence over time"
+                          width={600}
+                          height={450}
+                          priority
+                          className="w-full h-auto"
+                          caption="How we see AI: 'Haha that's adorable, the funny robot can do monkey tricks!'"
+                        />
+                      </motion.div>
+                    )}
+                    {shouldShowReality && (
+                      <motion.div
+                        key="reality"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="relative"
+                      >
+                        <PresentationImage
+                          src="https://images-jacareerday.agw3.org/Intelligence2.png"
+                          alt="Graph showing the actual exponential growth of AI intelligence"
+                          width={600}
+                          height={450}
+                          className="w-full h-auto"
+                          caption="The Reality: AI's capabilities are growing exponentially"
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Right Column - Examples */}
+                <div className="text-left">
+                  <AnimatePresence mode="wait" initial={false}>
+                    {!shouldShowReality && (
+                      <motion.div
+                        key="simple-examples"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="space-y-4 relative"
+                      >
+                        <div className="glass-card p-4 rounded-xl">
+                          <img 
+                            src="https://images-jacareerday.agw3.org/shrek_simple.gif"
+                            alt="Simple AI-generated Shrek"
+                            className="w-full rounded-lg mb-2 max-h-[200px] sm:max-h-[250px] md:max-h-[340px] object-contain mx-auto"
+                          />
+                          <p className="text-gray-300 text-center text-sm sm:text-base">Early AI art: Basic style transfer</p>
+                        </div>
+                        <div className="glass-card p-4 rounded-xl">
+                          <video 
+                            autoPlay 
+                            loop 
+                            muted 
+                            playsInline
+                            className="w-full rounded-lg mb-2 max-h-[200px] sm:max-h-[250px] md:max-h-[340px] object-contain mx-auto"
+                          >
+                            <source src="https://images-jacareerday.agw3.org/will_smith_bad_spaghetti.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                          <p className="text-gray-300 text-center text-sm sm:text-base">Early AI video: Simple face swaps</p>
+                        </div>
+                      </motion.div>
+                    )}
+                    {shouldShowReality && (
+                      <motion.div
+                        key="advanced-examples"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="space-y-4 relative"
+                      >
+                        <div className="glass-card p-4 rounded-xl">
+                          <img 
+                            src="https://images-jacareerday.agw3.org/shrek_knitted.gif"
+                            alt="Advanced AI-generated Shrek"
+                            className="w-full rounded-lg mb-2 max-h-[200px] sm:max-h-[250px] md:max-h-[340px] object-contain mx-auto"
+                          />
+                          <p className="text-gray-300 text-center text-sm sm:text-base">Modern AI art: Complex style synthesis</p>
+                        </div>
+                        <div className="glass-card p-4 rounded-xl">
+                          <img 
+                            src="https://images-jacareerday.agw3.org/shrek_fashion.gif"
+                            alt="Advanced AI-generated fashion Shrek"
+                            className="w-full rounded-lg mb-2 max-h-[200px] sm:max-h-[250px] md:max-h-[340px] object-contain mx-auto"
+                          />
+                          <p className="text-gray-300 text-center text-sm sm:text-base">Modern AI video: Seamless style adaptation</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+              {shouldShowReality && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-2xl sm:text-3xl md:text-4xl text-gray-300 font-light mt-6 sm:mt-8"
+                >
+                  If we're this wrong about AI's progress today,<br/>
+                  <span className="text-blue-400 font-semibold">what are we missing about tomorrow?</span>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+        )
+      }
     },
     {
       id: 3,
@@ -762,136 +931,165 @@ export default function Presentation() {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      {/* Background Layer */}
-      <div className="fixed inset-0 z-0">
-        <DynamicBackground />
-      </div>
+      <VideoOverlay 
+        isVisible={showIntroVideo}
+        onStartPresentation={startPresentation}
+      />
       
-      {/* View Mode Toggle */}
-      <div className="fixed top-4 right-4 z-50">
-        <button
-          onClick={() => setIsVerticalMode(prev => !prev)}
-          className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-white backdrop-blur-sm transition-colors"
-        >
-          {isVerticalMode ? "Switch to Slides" : "View All"}
-        </button>
-      </div>
-      
-      {/* Content Layer */}
-      <div className="relative z-10 min-h-screen overflow-y-auto">
-        {isVerticalMode ? (
-          // Vertical Mode
-          <div className="pb-32">
-            {slides.map((slide, index) => (
-              <div 
-                key={slide.id}
-                className="border-b border-white/10 last:border-b-0"
-              >
-                {slide.content}
-              </div>
-            ))}
+      {/* Only show presentation content after video is dismissed */}
+      {presentationStarted && (
+        <>
+          {/* Background Layer */}
+          <div className="fixed inset-0 z-0">
+            <DynamicBackground />
           </div>
-        ) : (
-          // Slide Mode
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.3 }}
-              className="relative pb-32"
+          
+          {/* View Mode Toggle */}
+          <div className="fixed top-4 right-4 z-50 flex gap-2">
+            <button
+              onClick={() => {
+                setShowIntroVideo(true)
+                setPresentationStarted(false)
+              }}
+              className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-white backdrop-blur-sm transition-colors flex items-center gap-2"
             >
-              {slides[currentSlide].content}
-            </motion.div>
-          </AnimatePresence>
-        )}
-      </div>
-
-      {/* Controls Layer - Only show in slide mode */}
-      {!isVerticalMode && (
-        <div className="fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-4 z-50 bg-black/20 backdrop-blur-sm p-2 rounded-full">
-          <button 
-            onClick={() => {
-              if (currentSlide === 1 && showRealityImage) {
-                setShowRealityImage(false)
-              } else {
-                currentSlide > 0 && setCurrentSlide(prev => prev - 1)
-              }
-            }}
-            className={`p-2 sm:p-3 rounded-full transition-all duration-200 ${
-              currentSlide === 0 
-                ? 'bg-white/5 cursor-not-allowed' 
-                : 'bg-white/10 hover:bg-white/20'
-            }`}
-            disabled={currentSlide === 0}
-            aria-label="Previous slide"
-          >
-            <FiChevronLeft className={`w-4 h-4 sm:w-6 sm:h-6 ${currentSlide === 0 ? 'text-white/50' : 'text-white'}`} />
-          </button>
-          <button 
-            onClick={() => {
-              if (currentSlide === 1 && !showRealityImage) {
-                setShowRealityImage(true)
-              } else {
-                currentSlide < slides.length - 1 && setCurrentSlide(prev => prev + 1)
-              }
-            }}
-            className={`p-2 sm:p-3 rounded-full transition-all duration-200 ${
-              currentSlide === slides.length - 1 
-                ? 'bg-white/5 cursor-not-allowed' 
-                : 'bg-white/10 hover:bg-white/20'
-            }`}
-            disabled={currentSlide === slides.length - 1}
-            aria-label="Next slide"
-          >
-            <FiChevronRight className={`w-4 h-4 sm:w-6 sm:h-6 ${currentSlide === slides.length - 1 ? 'text-white/50' : 'text-white'}`} />
-          </button>
-          <button 
-            onClick={toggleFullscreen}
-            className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-          >
-            {isFullscreen ? <FiMinimize className="w-4 h-4 sm:w-6 sm:h-6 text-white" /> : <FiMaximize className="w-4 h-4 sm:w-6 sm:h-6 text-white" />}
-          </button>
-          <button 
-            onClick={() => setShowQR(prev => !prev)}
-            className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-          >
-            <FiShare2 className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-          </button>
-        </div>
-      )}
-
-      {/* QR Code Layer */}
-      <AnimatePresence>
-        {showQR && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.2 }}
-            className="fixed bottom-32 sm:bottom-40 right-4 sm:right-8 z-50 bg-white p-4 rounded-xl shadow-2xl"
-          >
-            <QRCode url={typeof window !== 'undefined' ? window.location.href : ''} size={200} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Navigation Dots - Only show in slide mode */}
-      {!isVerticalMode && (
-        <div className="fixed bottom-20 sm:bottom-24 left-1/2 transform -translate-x-1/2 z-50 bg-black/20 backdrop-blur-sm px-3 py-2 rounded-full">
-          <div className="flex gap-1 sm:gap-2">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-white' : 'bg-white/30 hover:bg-white/50'
-                }`}
-              />
-            ))}
+              <FiPlay className="w-4 h-4" />
+              Watch Video
+            </button>
+            <button
+              onClick={() => setIsVerticalMode(prev => !prev)}
+              className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-white backdrop-blur-sm transition-colors"
+            >
+              {isVerticalMode ? "Switch to Slides" : "View All"}
+            </button>
           </div>
-        </div>
+          
+          {/* Content Layer */}
+          <div className="relative z-10 min-h-screen overflow-y-auto">
+            {isVerticalMode ? (
+              // Vertical Mode
+              <div className="pb-32">
+                {slides.map((slide, index) => (
+                  <div 
+                    key={slide.id}
+                    className="border-b border-white/10 last:border-b-0"
+                  >
+                    {slide.render ? slide.render({}) : slide.content}
+                    {/* Show reality image version for slide 2 */}
+                    {index === 1 && slide.render && (
+                      <div className="border-t border-white/10 pt-8">
+                        <h3 className="text-2xl text-center mb-8 text-white">Alternative View</h3>
+                        {slide.render({ forceShowReality: true })}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              // Slide Mode
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative pb-32"
+                >
+                  {slides[currentSlide].render 
+                    ? slides[currentSlide].render({}) 
+                    : slides[currentSlide].content}
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </div>
+
+          {/* Controls Layer - Only show in slide mode */}
+          {!isVerticalMode && (
+            <div className="fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-4 z-50 bg-black/20 backdrop-blur-sm p-2 rounded-full">
+              <button 
+                onClick={() => {
+                  if (currentSlide === 1 && showRealityImage) {
+                    setShowRealityImage(false)
+                  } else {
+                    currentSlide > 0 && setCurrentSlide(prev => prev - 1)
+                  }
+                }}
+                className={`p-2 sm:p-3 rounded-full transition-all duration-200 ${
+                  currentSlide === 0 
+                    ? 'bg-white/5 cursor-not-allowed' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}
+                disabled={currentSlide === 0}
+                aria-label="Previous slide"
+              >
+                <FiChevronLeft className={`w-4 h-4 sm:w-6 sm:h-6 ${currentSlide === 0 ? 'text-white/50' : 'text-white'}`} />
+              </button>
+              <button 
+                onClick={() => {
+                  if (currentSlide === 1 && !showRealityImage) {
+                    setShowRealityImage(true)
+                  } else {
+                    currentSlide < slides.length - 1 && setCurrentSlide(prev => prev + 1)
+                  }
+                }}
+                className={`p-2 sm:p-3 rounded-full transition-all duration-200 ${
+                  currentSlide === slides.length - 1 
+                    ? 'bg-white/5 cursor-not-allowed' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}
+                disabled={currentSlide === slides.length - 1}
+                aria-label="Next slide"
+              >
+                <FiChevronRight className={`w-4 h-4 sm:w-6 sm:h-6 ${currentSlide === slides.length - 1 ? 'text-white/50' : 'text-white'}`} />
+              </button>
+              <button 
+                onClick={toggleFullscreen}
+                className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              >
+                {isFullscreen ? <FiMinimize className="w-4 h-4 sm:w-6 sm:h-6 text-white" /> : <FiMaximize className="w-4 h-4 sm:w-6 sm:h-6 text-white" />}
+              </button>
+              <button 
+                onClick={() => setShowQR(prev => !prev)}
+                className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              >
+                <FiShare2 className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+              </button>
+            </div>
+          )}
+
+          {/* Navigation Dots - Only show in slide mode */}
+          {!isVerticalMode && (
+            <div className="fixed bottom-20 sm:bottom-24 left-1/2 transform -translate-x-1/2 z-50 bg-black/20 backdrop-blur-sm px-3 py-2 rounded-full">
+              <div className="flex gap-1 sm:gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-colors ${
+                      index === currentSlide ? 'bg-white' : 'bg-white/30 hover:bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* QR Code Layer */}
+          <AnimatePresence>
+            {showQR && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="fixed bottom-32 sm:bottom-40 right-4 sm:right-8 z-50 bg-white p-4 rounded-xl shadow-2xl"
+              >
+                <QRCode url={typeof window !== 'undefined' ? window.location.href : ''} size={200} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
       )}
     </div>
   )
