@@ -20,7 +20,7 @@ export default function VideoOverlay({ isVisible, onStartPresentation }: VideoOv
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(true)
   const [progress, setProgress] = useState(0)
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration] = useState(248) // Set initial duration to known video length
   const [showControls, setShowControls] = useState(true)
 
   // Handle video initialization and cleanup
@@ -30,12 +30,27 @@ export default function VideoOverlay({ isVisible, onStartPresentation }: VideoOv
 
     // Set initial duration once metadata is loaded
     const handleLoadedMetadata = () => {
-      setDuration(video.duration)
+      // Only update duration if we got a valid value
+      if (video.duration && !isNaN(video.duration) && video.duration > 0) {
+        setDuration(video.duration)
+      }
     }
 
-    // Update progress
+    // Update progress with safety checks
     const handleTimeUpdate = () => {
-      setProgress((video.currentTime / video.duration) * 100)
+      if (video.duration && !isNaN(video.duration) && video.duration > 0) {
+        setProgress((video.currentTime / video.duration) * 100)
+      } else {
+        // Fallback to our known duration
+        setProgress((video.currentTime / 248) * 100)
+      }
+    }
+
+    // Format time for display
+    const formatTime = (seconds: number): string => {
+      const mins = Math.floor(seconds / 60)
+      const secs = Math.floor(seconds % 60)
+      return `${mins}:${secs.toString().padStart(2, '0')}`
     }
 
     // Handle video end
@@ -44,14 +59,22 @@ export default function VideoOverlay({ isVisible, onStartPresentation }: VideoOv
       video.play()
     }
 
+    // Handle video errors
+    const handleError = (e: Event) => {
+      console.error('Video error:', e)
+      // Could add user-facing error handling here if needed
+    }
+
     video.addEventListener('loadedmetadata', handleLoadedMetadata)
     video.addEventListener('timeupdate', handleTimeUpdate)
     video.addEventListener('ended', handleEnded)
+    video.addEventListener('error', handleError)
 
     return () => {
       video.removeEventListener('loadedmetadata', handleLoadedMetadata)
       video.removeEventListener('timeupdate', handleTimeUpdate)
       video.removeEventListener('ended', handleEnded)
+      video.removeEventListener('error', handleError)
     }
   }, [])
 
@@ -144,6 +167,13 @@ export default function VideoOverlay({ isVisible, onStartPresentation }: VideoOv
     })
   }
 
+  // Format time helper function
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60)
+    const secs = Math.floor(seconds % 60)
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -199,7 +229,7 @@ export default function VideoOverlay({ isVisible, onStartPresentation }: VideoOv
                   {isPlaying ? <FiPause className="w-6 h-6" /> : <FiPlay className="w-6 h-6" />}
                 </button>
                 <div className="text-sm text-white/80">
-                  {Math.floor(duration * (progress / 100))}s / {Math.floor(duration)}s
+                  {formatTime(duration * (progress / 100))} / {formatTime(duration)}
                 </div>
               </div>
 
