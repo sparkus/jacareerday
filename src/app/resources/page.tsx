@@ -112,6 +112,112 @@ export default function Resources() {
                 </a>
               </div>
             </div>
+
+            {/* Educational Video Series */}
+            <div className="mt-8">
+              <h3 className="text-2xl font-bold text-white mb-6">Educational Video Series</h3>
+              
+              {/* 3Blue1Brown Series */}
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <FiPlay className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <h4 className="text-xl font-bold text-white">3Blue1Brown AI Series</h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <a 
+                    href="https://www.youtube.com/watch?v=aircAruvnKk" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">Neural Networks Explained</div>
+                    <p className="text-sm text-gray-300">
+                      A visually intuitive introduction to neural networks, covering layers, activations, and weights.
+                    </p>
+                  </a>
+                  <a 
+                    href="https://www.youtube.com/watch?v=IHZwWFHWa-w" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">Gradient Descent</div>
+                    <p className="text-sm text-gray-300">
+                      Detailed explanation of how neural networks learn through optimization algorithms.
+                    </p>
+                  </a>
+                  <a 
+                    href="https://www.youtube.com/watch?v=wjZofJX0v4M" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">Transformers & LLMs</div>
+                    <p className="text-sm text-gray-300">
+                      Visual explanation of transformer architecture and how large language models work.
+                    </p>
+                  </a>
+                  <a 
+                    href="https://www.youtube.com/watch?v=9-Jl0dxWQs8" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">LLM Fact Storage</div>
+                    <p className="text-sm text-gray-300">
+                      Exploration of how large language models store and retrieve information.
+                    </p>
+                  </a>
+                </div>
+              </div>
+
+              {/* Andrej Karpathy Series */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-purple-500/20 rounded-lg">
+                    <FiPlay className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <h4 className="text-xl font-bold text-white">Andrej Karpathy Series</h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <a 
+                    href="https://www.youtube.com/watch?v=kCc8FmEb1nY" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">Building GPT from Scratch</div>
+                    <p className="text-sm text-gray-300">
+                      Hands-on tutorial building a GPT model using Python and PyTorch.
+                    </p>
+                  </a>
+                  <a 
+                    href="https://www.youtube.com/watch?v=2zHkJFOC6FU" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">Deep Dive into LLMs</div>
+                    <p className="text-sm text-gray-300">
+                      In-depth exploration of LLM architecture, training, and applications.
+                    </p>
+                  </a>
+                  <a 
+                    href="https://www.youtube.com/watch?v=dXMxP-BWkzY" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="block p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="text-lg font-semibold text-blue-400 mb-2">Intro to LLMs</div>
+                    <p className="text-sm text-gray-300">
+                      Foundational introduction to large language models for beginners.
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Latest Research & Reports */}
@@ -263,7 +369,7 @@ export default function Resources() {
             </div>
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-400">
-                Last updated: February 16, 2025<br/>
+                Last updated: March 29, 2025<br/>
                 All statistics and projections are sourced from published research reports and studies.
               </p>
             </div>
