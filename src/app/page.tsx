@@ -920,7 +920,7 @@ export default function Presentation() {
                 Explore All Resources →
               </Link>
               <p className="mt-6 text-sm text-gray-400">
-                Last updated: February 16, 2025
+                Last updated: March 29th, 2025
               </p>
             </div>
           </div>
